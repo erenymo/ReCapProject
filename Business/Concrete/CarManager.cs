@@ -18,17 +18,22 @@ public class CarManager : ICarService
         return _carDal.GetAll();
     }
 
-    public List<Car> GetCarsByBrandId(int Id)
+    public List<Car> GetCarsByBrandId(int id)
     {
-        return _carDal.GetAll(p => p.BrandId == Id);
+        return _carDal.GetAll(p => p.BrandId == id);
     }
 
-    public List<Car> GetCarsByColorId(int Id)
+    public List<Car> GetCarsByColorId(int id)
     {
-        return _carDal.GetAll(p => p.ColorId == Id);
+        return _carDal.GetAll(p => p.ColorId == id);
     }
 
-    public void AddCar(Car car)
+    public Car GetById(int id)
+    {
+        return _carDal.Get(c => c.Id == id);
+    }
+
+    public void Insert(Car car)
     {
         if (car.Description.Length > 2 && car.DailyPrice > 0)
         {
@@ -39,5 +44,15 @@ public class CarManager : ICarService
         {
             Console.WriteLine("Araç bilgileri hatalı!");
         }
+    }
+
+    public void Delete(Car car)
+    {
+        _carDal.Delete(car);
+    }
+
+    public void Update(Car car)
+    {
+        _carDal.Update(car);
     }
 }
