@@ -1,6 +1,7 @@
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete;
 
@@ -26,6 +27,11 @@ public class CarManager : ICarService
     public List<Car> GetCarsByColorId(int id)
     {
         return _carDal.GetAll(p => p.ColorId == id);
+    }
+
+    public List<CarDetailDto> GetCarDetails()
+    {
+        return _carDal.GetCarDetails();
     }
 
     public Car GetById(int id)

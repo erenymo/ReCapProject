@@ -9,7 +9,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        //CarTest();
+        CarTest();
         //BrandTest();
         //ColorTest();
     }
@@ -38,9 +38,9 @@ class Program
     {
         CarManager carManager = new CarManager(new EfCarDal());
         
-        foreach (var car in carManager.GetCarsByBrandId(1))
+        foreach (var car in carManager.GetCarDetails())
         {
-            Console.WriteLine($"{car.Description}");
+            Console.WriteLine($"{car.Name} {car.BrandName} {car.ColorName} {car.DailyPrice}");
         }
     }
 }

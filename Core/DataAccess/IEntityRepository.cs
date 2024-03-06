@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Entities.Abstract;
+using Core.Entities;
 
 namespace DataAccess.Abstract;
 
