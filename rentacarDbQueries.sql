@@ -1,6 +1,40 @@
 DROP TABLE Cars
 DROP TABLE Brands
 DROP TABLE Colors
+DROP TABLE Customers
+DROP TABLE Users
+DROP TABLE Rentals
+
+CREATE TABLE Users (
+    Id INT IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) NOT NULL,
+    [Password] NVARCHAR(100) NOT NULL
+
+    CONSTRAINT pk_Users PRIMARY KEY (Id)
+)
+
+CREATE TABLE Customers (
+    Id INT IDENTITY(1,1),
+    UserId INT NOT NULL,
+    CompanyName VARCHAR(100) NOT NULL,
+
+    CONSTRAINT pk_CustomerId PRIMARY KEY (Id),
+    CONSTRAINT fk_CustomerUserId FOREIGN KEY (UserId) REFERENCES Users(Id)
+)
+
+CREATE TABLE Rentals (
+    Id INT IDENTITY(1,1),
+    CarId INT NOT NULL,
+    CustomerId INT NOT NULL,
+    RentDate DATETIME2 NOT NULL,
+    ReturnDate DATETIME2
+
+    CONSTRAINT pk_Id PRIMARY KEY (Id),
+    CONSTRAINT fk_CarId FOREIGN KEY (CarId) REFERENCES Cars(Id),
+    CONSTRAINT fk_CustomerId FOREIGN KEY (CustomerId) REFERENCES Customers(Id)
+)
 
 CREATE TABLE Brands (
     Id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,

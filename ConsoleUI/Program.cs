@@ -11,7 +11,16 @@ class Program
     {
         //CarTest();
         //BrandTest();
-        ColorTest();
+        //ColorTest();
+
+        RentalManager rentalManager = new RentalManager(new EfRentalDal());
+        Rental rental3 = new Rental { CarId = 5, CustomerId = 4, RentDate = DateTime.Now};
+        rentalManager.Insert(rental3);
+
+        foreach (var Rental in rentalManager.GetAll().Data)
+        {
+            Console.WriteLine($"{Rental.Id} {Rental.CarId} {Rental.CustomerId} {Rental.RentDate} {Rental.ReturnDate?.ToString()}");
+        }
     }
 
     private static void ColorTest()
