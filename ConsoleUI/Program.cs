@@ -9,16 +9,16 @@ class Program
 {
     static void Main(string[] args)
     {
-        CarTest();
+        //CarTest();
         //BrandTest();
-        //ColorTest();
+        ColorTest();
     }
 
     private static void ColorTest()
     {
         ColorManager colorManager = new ColorManager(new EfColorDal());
 
-        foreach (var color in colorManager.GetAll())
+        foreach (var color in colorManager.GetAll().Data)
         {
             Console.WriteLine($"{color.Name}");
         }
@@ -28,7 +28,7 @@ class Program
     {
         BrandManager brandManager = new BrandManager(new EfBrandDal());
         
-        foreach (var brand in brandManager.GetAll())
+        foreach (var brand in brandManager.GetAll().Data)
         {
             Console.WriteLine($"{brand.Name}");
         }
@@ -38,7 +38,7 @@ class Program
     {
         CarManager carManager = new CarManager(new EfCarDal());
         
-        foreach (var car in carManager.GetCarDetails())
+        foreach (var car in carManager.GetCarDetails().Data)
         {
             Console.WriteLine($"{car.Name} {car.BrandName} {car.ColorName} {car.DailyPrice}");
         }

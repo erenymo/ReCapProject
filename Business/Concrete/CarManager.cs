@@ -1,4 +1,6 @@
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -14,51 +16,55 @@ public class CarManager : ICarService
         _carDal = carDal;
     }
 
-    public List<Car> GetAll()
+    public IDataResult<List<Car>> GetAll()
     {
-        return _carDal.GetAll();
+        return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
     }
 
-    public List<Car> GetCarsByBrandId(int id)
+    public IDataResult<List<Car>> GetCarsByBrandId(int id)
     {
-        return _carDal.GetAll(p => p.BrandId == id);
+        return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id), Messages.CarsListed);
     }
 
-    public List<Car> GetCarsByColorId(int id)
+    public IDataResult<List<Car>> GetCarsByColorId(int id)
     {
-        return _carDal.GetAll(p => p.ColorId == id);
+        return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id), Messages.CarsListed);
     }
 
-    public List<CarDetailDto> GetCarDetails()
+    public IDataResult<List<CarDetailDto>> GetCarDetails()
     {
-        return _carDal.GetCarDetails();
+        return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.CarsListed);
     }
 
-    public Car GetById(int id)
+    public IDataResult<Car> GetById(int id)
     {
-        return _carDal.Get(c => c.Id == id);
+        return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
     }
 
-    public void Insert(Car car)
+    public IResult Insert(Car car)
     {
         if (car.Description.Length > 2 && car.DailyPrice > 0)
         {
             _carDal.Add(car);
-            Console.WriteLine("Araç veritabanına başarıyla eklendi");
+            return new SuccessResult(Messages.CarInserted);
         }
         else
         {
-            Console.WriteLine("Araç bilgileri hatalı!");
+            return new ErrorResult(Messages.InvalidCar);
         }
     }
 
-    public void Delete(Car car)
+    public IResult Delete(Car car)
     {
         _carDal.Delete(car);
+        return new SuccessResult(Messages.CarDeleted);
+
     }
 
-    public void Update(Car car)
+    public IResult Update(Car car)
     {
         _carDal.Update(car);
+        return new SuccessResult(Messages.CarUpdated);
+
     }
 }
