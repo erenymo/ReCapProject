@@ -33,7 +33,7 @@ public class CustomerManager:ICustomerService
 
     public IResult Delete(Customer customer)
     {
-        _customerDal.Add(customer);
+        _customerDal.Delete(customer);
         return new SuccessResult(Messages.CustomerDeleted);
     }
 
