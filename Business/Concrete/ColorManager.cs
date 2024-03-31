@@ -1,8 +1,11 @@
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidatorRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 
 namespace Business.Concrete;
 
@@ -27,6 +30,7 @@ public class ColorManager:IColorService
 
     public IResult Insert(Color color)
     { 
+        ValidationTool.Validate(new ColorValidator(), color);
         _colorDal.Add(color);
         return new SuccessResult(Messages.ColorInserted);
     }
