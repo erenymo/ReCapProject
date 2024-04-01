@@ -1,5 +1,7 @@
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidatorRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,6 +27,7 @@ public class BrandManager : IBrandService
         return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == id));
     }
 
+    [ValidationAspect(typeof(BrandValidator))]
     public IResult Insert(Brand brand)
     {
         _brandDal.Add(brand);

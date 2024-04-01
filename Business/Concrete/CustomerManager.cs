@@ -1,5 +1,7 @@
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidatorRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,6 +27,7 @@ public class CustomerManager:ICustomerService
         return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
     }
 
+    [ValidationAspect(typeof(CustomerValidator))]
     public IResult Insert(Customer customer)
     {
         _customerDal.Add(customer);

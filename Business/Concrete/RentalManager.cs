@@ -1,5 +1,7 @@
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidatorRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,6 +27,7 @@ public class RentalManager:IRentalService
         return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id));
     }
 
+    [ValidationAspect(typeof(RentalValidator))]
     public IResult Insert(Rental rental)
     {
         Rental rentalCheck = _rentalDal.GetUnreturnedCar(rental.CarId);

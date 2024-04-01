@@ -1,6 +1,7 @@
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidatorRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -43,16 +44,9 @@ public class CarManager : ICarService
         return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
     }
 
+    [ValidationAspect(typeof(CarValidator))]
     public IResult Insert(Car car)
     {
-        var context = new ValidationContext<Car>(car);
-        CarValidator carValidator = new CarValidator();
-        var result = carValidator.Validate(context);
-        if (!result.IsValid)
-        {
-            throw new ValidationException(result.Errors);
-        }
-        
         
         _carDal.Add(car);
         return new SuccessResult(Messages.CarInserted);

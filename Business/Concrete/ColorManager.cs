@@ -1,6 +1,7 @@
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidatorRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -28,9 +29,10 @@ public class ColorManager:IColorService
         return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == id));
     }
 
+    [ValidationAspect(typeof(ColorValidator))]
     public IResult Insert(Color color)
     { 
-        ValidationTool.Validate(new ColorValidator(), color);
+        //business codes
         _colorDal.Add(color);
         return new SuccessResult(Messages.ColorInserted);
     }
